@@ -11,7 +11,5 @@ export interface User {
     id: string;
     name: string;
     email: string;
-    claims: {[claim: string]: boolean}
+    claims: string[];
 }
-
-export const params = 5;
