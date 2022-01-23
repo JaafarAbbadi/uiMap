@@ -56,6 +56,12 @@ export default defineComponent({
     const selectedIndex = ref(0);
     const appPages = [
       {
+        title: 'users',
+        url: '/users',
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+      },
+      {
         title: 'Inbox',
         url: '/folder/Inbox',
         iosIcon: mailOutline,

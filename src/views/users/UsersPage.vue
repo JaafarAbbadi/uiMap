@@ -1,0 +1,61 @@
+<template>
+    <ion-page>        
+        <ion-header :translucent="true">
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <ion-menu-button color="primary"></ion-menu-button>
+                </ion-buttons>
+                <ion-title>{{ title }}</ion-title>
+                    <ion-button slot="end" color="primary">
+                        <ion-icon slot="icon-only" :icon="add"></ion-icon>
+                    </ion-button>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <test-component></test-component>
+            <ion-list>
+                <ion-item v-for="(user,index) of users" :key='index' @click="() => router.push('/users/'+user.id)">
+                    <ion-avatar slot="start"> <img :src="user.photo"/> </ion-avatar>
+                    <ion-label> {{user.name}}</ion-label>
+                    <ion-note></ion-note>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-page>
+</template>
+
+<script>
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButton } from '@ionic/vue';
+import { add } from 'ionicons/icons';
+import { useRouter } from 'vue-router';
+import { getUsers } from './../../composer/fake-server/api';
+import {testComponent} from '@/composer/components/list'
+export default {
+    components: {
+        testComponent,
+        IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButtons,
+    },
+    data ()  {
+        return {
+            title: 'Users',
+            users: [],
+        }
+    },
+    setup() {
+        const router = useRouter();
+        return {router, add};
+    },
+
+    mounted()  {
+        getUsers().then(us => this.users = us)
+        console.log('users mounted')
+    },
+    unmounted: function () {
+        console.log('users unmounted')
+    }
+}
+</script>
+
+<style>
+
+</style>

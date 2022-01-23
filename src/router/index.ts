@@ -9,6 +9,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/folder/:id',
     component: () => import ('../views/FolderPage.vue')
+  },
+  { 
+    path: '/users',
+    component: () => import('../views/users/UsersPage.vue')
+  },
+  { 
+    path: '/users/:id',
+    component: () => import('../views/users/UserPage.vue')
   }
 ]
 

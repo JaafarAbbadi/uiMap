@@ -1,7 +1,7 @@
 
 import { PATH } from './env';
 import { write , validateArguments, read} from './functions/async'
-
+import { User, template as userTemplate } from './models/user.model';
 
 
 /** Application Layout */
@@ -9,9 +9,14 @@ import { write , validateArguments, read} from './functions/async'
 
 /** */
 
-validateArguments(process.argv).then(options => {
-    console.log(options)
-    read(`models/${options.model}.model.ts`).then(buf => console.log(buf.toLocaleString()))
-
+validateArguments(process.argv).then(modelName => {
+    console.log(modelName)
+    // get model template
+    // create model pages folders (list and crud view)
+    // create list & crud pages
+    // update App.vue menu items
+    // update router/index.ts
+    
+    read(`models/${modelName}.model.ts`).then(buf => console.log(buf.toLocaleString()));
 
 }, err => console.log(err));

@@ -7,7 +7,7 @@ var argumentsToDictionary = function (args) {
     var argsDict = {};
     args.slice(2).map(function (arg) { return arg.split(':'); }).forEach(function (arg) {
         var key = arg[0].slice(2);
-        var val = arg[1].includes(',') ? arg[1].split(',') : arg[1];
+        var val = arg[1];
         argsDict[key] = val;
     });
     return argsDict;
@@ -23,16 +23,8 @@ var validateArguments = function (args) {
                 reject('Please provide a model name');
             else if (!(models.includes(argsDict['model'])))
                 reject("".concat(argsDict['model'], " is not in ").concat(models));
-            else if (!argsDict['sm'])
-                reject('please select model small view properties => sm:<prop1>,<prop2>');
-            else if (argsDict['view'])
-                if ((argsDict['view'] == 'grid') || argsDict['view'] == 'list')
-                    resolve({ model: argsDict['model'], sm: argsDict['sm'], view: argsDict['view'] });
-                else
-                    reject('view can only be either grid or list');
-            else {
-                resolve({ model: argsDict['model'], sm: argsDict['sm'], view: 'list' });
-            }
+            else
+                resolve(argsDict['model']);
         }, function (err) { return reject(err); });
     });
 };
