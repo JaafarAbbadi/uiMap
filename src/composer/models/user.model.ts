@@ -4,12 +4,13 @@
  *     id: '1',
  *     name: 'jack',
  *     email: 'jack@example.com',
- *     claims: {anonymouse: true}
+ *     claims: ["anonymouse"]
  * }
  */
 export interface User {
     id: string;
     name: string;
     email: string;
+    photo: string;
     claims: string[];
 }
