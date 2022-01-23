@@ -23,7 +23,7 @@ export const getUser = (id: string): Promise<User> => {
     })
 }
 export const getUsers = (): Promise<User[]> => {
-    return new Promise<User[]>((res,rej) => {
+    return new Promise<User[]>((res) => {
         res(users);
     })
 }
