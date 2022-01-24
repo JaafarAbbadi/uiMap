@@ -12,9 +12,8 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <test-component></test-component>
             <ion-list>
-                <ion-item v-for="(item,index) of users" :key='index' @click="() => router.push('/users/'+user.id)">
+                <ion-item v-for="(item,index) of users" :key='index' @click="() => router.push('/users/'+item.id)">
                     <ion-avatar slot="start"> <img :src="item.photo"/> </ion-avatar>
                     <ion-label> {{item.name}}</ion-label>
                     <ion-note></ion-note>
@@ -29,10 +28,8 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 import { getUsers } from '@/composer/fake-server/api';
-import {testComponent} from '@/composer/components/list'
 export default {
     components: {
-        testComponent,
         IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButtons,
     },
     data ()  {
