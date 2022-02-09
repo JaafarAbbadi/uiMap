@@ -22,9 +22,9 @@ export const getUser = (id: string): Promise<User> => {
         else rej('user not found')
     })
 }
-export const getUsers = (): Promise<User[]> => {
+export const getUsers = (limit: number, page: number): Promise<User[]> => {
     return new Promise<User[]>((res) => {
-        res(users);
+        res(users.slice(limit*(page-1), limit*page));
     })
 }
 export const updateUser = (id: string, values:{[val: string]: any}): Promise<any> => {

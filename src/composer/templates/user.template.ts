@@ -4,7 +4,7 @@ import * as validators from 'validator'
 import { Template } from "../types/template.type";
 
 export const userTemplate: Template<User>  = {
-    view: 'list',
+    view: 'grid',
     sm: ['name', 'photo'],
     apiCollection: {
         singleCreate: createUser,
@@ -16,7 +16,7 @@ export const userTemplate: Template<User>  = {
         multipleDelete: deleteUsers,
         multipleUpdate: updateUsers
     },
-    icon: {name: 'person', shape: 'sharp'},
+    icon: {name: 'airplane', shape: 'sharp'},
     form: {
         name: {
             formInput: 'textField',

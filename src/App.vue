@@ -34,7 +34,7 @@
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { /*ICON IMPORT*/ personSharp,  bookmarkOutline, bookmarkSharp} from 'ionicons/icons';
+import { /*ICON IMPORT*/ airplaneSharp,  bookmarkOutline, bookmarkSharp} from 'ionicons/icons';
 
 export default defineComponent({
   name: 'App',
@@ -60,8 +60,8 @@ export default defineComponent({
             {
                 title: 'User',
                 url: '/users',
-                iosIcon: personSharp,
-                mdIcon: personSharp
+                iosIcon: airplaneSharp,
+                mdIcon: airplaneSharp
             }
             ,
 
@@ -81,7 +81,7 @@ export default defineComponent({
       appPages, 
       labels,
       bookmarkOutline, bookmarkSharp,
-      /*ICON SETUP*/ personSharp, 
+      /*ICON SETUP*/ airplaneSharp, 
       isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   }
