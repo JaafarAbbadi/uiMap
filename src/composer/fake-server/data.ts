@@ -50,18 +50,3 @@ export const users = [
       ]
     }
 ]
-
-
-
-export const products: Product[] = [
-  {
-    id: 'string',
-    createDate: new Date(),
-    lastUpdateDate: new Date(),
-    name: 'string',
-    description: 'string;',
-    type: 'restuarant',
-    variants: [],
-    category: 'string'
-  }
-]
