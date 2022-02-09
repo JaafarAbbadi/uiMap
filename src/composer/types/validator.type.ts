@@ -1,0 +1,1 @@
+export type Validator = {func: (str: string) => boolean, params: {[name: string]: any}, error: string};

@@ -1,3 +1,5 @@
+
+
 <template>
     <ion-page>        
         <ion-header :translucent="true">
@@ -12,30 +14,42 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <ion-list>
-                <ion-item v-for="(item,index) of users" :key='index' @click="() => router.push('/users/'+item.id)">
-                    <ion-avatar slot="start"> <img :src="item.photo"/> </ion-avatar>
-                    <ion-label> {{item.name}}</ion-label>
-                    <ion-note></ion-note>
-                </ion-item>
-            </ion-list>
+            <ion-grid fixed>
+                <ion-row>
+                    <ion-col v-for="(item,index) of items" :key='index' >
+                        <ion-card @click="() => router.push('/'+title+'/'+item.id)">
+                            <ion-card-header>
+                                <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+                                <img :src="item.photo"/>
+                                <ion-card-title>{{item.name}}</ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>
+                                Awesome content
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-content>
     </ion-page>
 </template>
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButton } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButton,
+         IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle
+} from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 import { getUsers } from '@/composer/fake-server/api';
 export default {
     components: {
-        IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButtons,
+        IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButtons,
+        IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle 
     },
     data ()  {
         return {
             title: 'Users',
-            users: [],
+            items: [],
         }
     },
     setup() {
@@ -44,7 +58,7 @@ export default {
     },
 
     mounted()  {
-        getUsers().then(us => this.users = us)
+        getUsers().then(us => this.items = us)
         console.log('users mounted')
     },
     unmounted: function () {

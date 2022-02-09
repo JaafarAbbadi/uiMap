@@ -1,3 +1,5 @@
+import { Product } from "../models/product.model"
+
 export const users = [
     {
       "id": "1",
@@ -47,4 +49,19 @@ export const users = [
         "anonymouse"
       ]
     }
-  ]
+]
+
+
+
+export const products: Product[] = [
+  {
+    id: 'string',
+    createDate: new Date(),
+    lastUpdateDate: new Date(),
+    name: 'string',
+    description: 'string;',
+    type: 'restuarant',
+    variants: [],
+    category: 'string'
+  }
+]

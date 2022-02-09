@@ -1,21 +1,12 @@
-import {PATH} from '../env';
+
 import { readFile,  writeFile, readdir, mkdir} from 'graceful-fs';
-import { Options } from '../types/hkt';
-import { capitalizeFirstLetter } from './direct';
+import { argumentsToDictionary, capitalizeFirstLetter } from './direct';
 import { Icon } from '../types/icons';
 
-export const argumentsToDictionary = (args:string[]): {[i: string]: string|string[]} => {
-    const argsDict: {[i: string]: string|string[]} = {};
-    args.slice(2).map(arg => arg.split(':')).forEach(arg => {
-        const key = arg[0].slice(2);
-        const val = arg[1];
-        argsDict[key]=val;
-    });
-    return argsDict;
-}
+
 export const validateArguments = (args:string[]): Promise<string> => {
     return new Promise<string>((resolve,reject) => {
-        readDirectory('models').then(files => {
+        readDirectory('src/composer/models').then(files => {
             const models = files.map(f => f.split('.')[0]);
             const argsDict = argumentsToDictionary(args);
             // conditions
@@ -25,7 +16,6 @@ export const validateArguments = (args:string[]): Promise<string> => {
         }, err => reject(err))
     })
 }
-
 export const createDir = (dirName: string): Promise<void> => {
     return new Promise<void>((resolve) => mkdir(`${dirName}`,{}, () => resolve()))
 }
@@ -35,7 +25,7 @@ export const write = (filename: string, data: string | NodeJS.ArrayBufferView) :
 }
 export const readDirectory = (dirName: string): Promise<string[]> => {
     return new Promise<string[]>((resolve, reject) => {
-        readdir(`${PATH}/${dirName}`,{}, (err,files) => {
+        readdir(`${dirName}`,{}, (err,files) => {
             if (err) reject(err);
             else resolve(files as string[]);
         })
@@ -62,25 +52,30 @@ export const getViews = (view: 'list'| 'grid'): Promise<{listView: string, crudV
     })
 }
 
-
+/**
+ * 
+ * @param modelName the name of the entity to be injected in the base view
+ * @param icon the icon to be used in the base view
+ * @returns a promise of type void
+ * 
+ * prepares a menu item, reads src/App.vue and inject (using string concat) a side menu item and the icon import
+ */
 export const updateAppVue = (modelName: string, icon: Icon): Promise<void> => {
     return new Promise<void>((resolve) => {
-        read(`src/App.vue`).then(appBuff => {
+        const menuItem = `
+            /*MENU ITEM*/
+            {
+                title: '${capitalizeFirstLetter(modelName)}',
+                url: '/${modelName}s',
+                iosIcon: ${icon.name}${capitalizeFirstLetter(icon.shape)},
+                mdIcon: ${icon.name}${capitalizeFirstLetter(icon.shape)}
+            }
+            `
+        read(`src/composer/layouts/base.layout.vue`).then(appBuff => {
             let appView = appBuff.toLocaleString();
-            if(!appView.includes(`${icon.name}${capitalizeFirstLetter(icon.shape)}`)){
-                appView = appView.split('/*ICON IMPORT*/')[0].concat(`/*ICON IMPORT*/ ${icon.name}${capitalizeFirstLetter(icon.shape)}, ${appView.split('/*ICON IMPORT*/')[1]}`);
-            }
-            if(!appView.includes(`url: '/${modelName}s'`)){
-                appView = appView.split('/*MENU ITEM*/')[0].concat(`/*MENU ITEM*/
-                {
-                    title: '${capitalizeFirstLetter(modelName)}',
-                    url: '/${modelName}s',
-                    iosIcon: ${icon.name}${capitalizeFirstLetter(icon.shape)},
-                    mdIcon: ${icon.name}${capitalizeFirstLetter(icon.shape)}
-                }
-                ,${appView.split('/*MENU ITEM*/')[1]}`
-                );
-            }
+            appView = appView.split('/*ICON IMPORT*/')[0].concat(`/*ICON IMPORT*/ ${icon.name}${capitalizeFirstLetter(icon.shape)}, ${appView.split('/*ICON IMPORT*/')[1]}`);
+            appView = appView.split('/*MENU ITEM*/')[0].concat(`${menuItem},\n${appView.split('/*MENU ITEM*/')[1]}`);
+            appView = appView.split('/*ICON SETUP*/')[0].concat(`/*ICON SETUP*/ ${icon.name}${capitalizeFirstLetter(icon.shape)}, ${appView.split('/*ICON SETUP*/')[1]}`);
             write(`src/App.vue`, appView).then(() => resolve())
         });
     })
@@ -120,3 +115,5 @@ export const updateModelViews = (modelName: string, views: {listView: string, cr
         });
     });
 }
+
+
