@@ -12,12 +12,14 @@ export const createCategory = (c: Category): Promise<any> => {
         else rej('input valid category') 
     })
 }
+
 export const createCategories = (cs: Category[]): Promise<any> => {
     return new Promise<any>((res,rej) => {
         if(cs.length) res(categories.push(...cs))
         else rej('input valid categories')
     })
 }
+
 export const getCategory = (id: string): Promise<Category> => {
     return new Promise<Category>((res,rej) => {
         const c = categories.find(c => c.id === id);
@@ -25,6 +27,7 @@ export const getCategory = (id: string): Promise<Category> => {
         else rej('category not found')
     })
 }
+
 export const getCategories = (limit: number, page: number, filter?: {[property: string]: any}): Promise<Category[]> => {
     return new Promise<Category[]>((res) => {
         res(
@@ -36,6 +39,7 @@ export const getCategories = (limit: number, page: number, filter?: {[property: 
         );
     })
 }
+
 export const updateCategory = (id: string, values:{[val: string]: any}): Promise<any> => {
     return new Promise<any>((res,rej) => {
         const c: any = categories.find(c => c.id === id);

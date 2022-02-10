@@ -14,9 +14,17 @@ Object.entries(templates).forEach(([modelName, template]) => {
             views.crudView = injectCode(views.crudView, "/*TITLE*/''", `'${capitalizeFirstLetter(modelName)}'`);
             // inject template import
             views.listView = injectCode(views.listView, `/*IMPORTS*/`, `import { ${modelName}Template as template } from '@/composer/templates/${modelName}.template';`)
-
+            views.crudView = injectCode(views.crudView, `/*IMPORTS*/`, `import { ${modelName}Template as template } from '@/composer/templates/${modelName}.template';`)
+            const icons = Object.entries(template.form).map(([name, val]) => val.icon?.name+capitalizeFirstLetter(val.icon?.shape+'')).join(',');
+            let iconDefinition = '';
+            Object.entries(template.form).map(([name, val]) => val.icon?.name+capitalizeFirstLetter(val.icon?.shape+'')).forEach(i => {
+                iconDefinition = iconDefinition+ `'${i}': ${i}, \n\t\t\t` 
+            })
+            views.crudView = injectCode(views.crudView, `/*ICON DEFINITION*/`, iconDefinition);
+            views.crudView = injectCode(views.crudView, `/*ICONS IMPORT*/`, `${icons}`);
+            views.crudView = injectCode(views.crudView, `/*ICONS SETUP*/`, `${icons}`);
             // create files
-            updateModelViews(modelName, views).then();   
+            updateModelViews(modelName, views).then();
         })
     });
 });

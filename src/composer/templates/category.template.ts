@@ -19,5 +19,16 @@ export const categoryTemplate: Template<Category>  = {
     },
     icon: {name: 'cafe', shape: 'sharp'},
     form: {
+        name: {
+            formInput: 'textField', icon:{name: 'information', shape:'outline'}, validators: [
+                {func: validators.default.isLength, params: {min: 2, max: 6}, error: 'user name should be at least 2 characters and no more than 6 characters'},
+            ]
+        },
+        photo: {
+            formInput: 'image', icon:{name: 'image', shape:'outline'}, validators: []
+        },
+        description: {
+            formInput: 'textField', icon:{name: 'documents', shape:'outline'}, validators: []
+        }
     }
 };

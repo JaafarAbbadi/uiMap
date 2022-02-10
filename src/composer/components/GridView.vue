@@ -59,6 +59,7 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 import { add ,
         chevronBackCircleOutline, 
         chevronForwardCircleOutline
+        /*ICON IMPORT*/
         } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 /*IMPORTS*/
@@ -83,7 +84,8 @@ export default {
             router,
             add,
             chevronBackCircleOutline, 
-            chevronForwardCircleOutline
+            chevronForwardCircleOutline,
+            /*ICON SETUP*/
         };
     },
     mounted(){

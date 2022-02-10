@@ -22,7 +22,7 @@ export const userTemplate: Template<User>  = {
             formInput: 'textField',
             icon: {name: 'enter', shape: 'outline'},
             validators: [
-                {func: validators.default.isLength, params: {min: 2, max: 3}, error: 'user name should be at least 2 characters and no more than 6 characters'},
+                {func: validators.default.isLength, params: {min: 2, max: 6}, error: 'user name should be at least 2 characters and no more than 6 characters'},
                 {func: validators.default.isLowercase, params: {}, error: 'user name should only be lower case'}
             ]
         },

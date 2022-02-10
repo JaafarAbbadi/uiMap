@@ -29,7 +29,7 @@
                     </ion-button>
                     <ion-item>
                         <ion-label position="floating">Limit: </ion-label>
-                        <ion-input type="number" inputmode="numeric" @ionChange="refresh()" v-model="limit" ></ion-input>
+                        <ion-input  inputmode="numeric" @ionChange="refresh()" v-model="limit" ></ion-input>
                     </ion-item>
                     <ion-button color="primary" slot="end" v-on:click="next()" >
                         <ion-icon slot="icon-only" :icon="chevronForwardCircleOutline"></ion-icon>
@@ -48,7 +48,8 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 import { 
     add, 
     chevronBackCircleOutline, 
-    chevronForwardCircleOutline
+    chevronForwardCircleOutline,
+    /*ICON IMPORT*/
 } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 import { categoryTemplate as template } from '@/composer/templates/category.template';
@@ -71,7 +72,8 @@ export default {
             router,
             add,
             chevronBackCircleOutline, 
-            chevronForwardCircleOutline
+            chevronForwardCircleOutline,
+            /*ICON SETUP*/
             };
     },
 
