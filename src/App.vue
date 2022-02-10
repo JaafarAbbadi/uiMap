@@ -58,21 +58,7 @@ export default defineComponent({
     
                 
                 /*MENU ITEM*/
-                {
-                    title: 'Category',
-                    url: '/categorys',
-                    iosIcon: cafeSharp,
-                    mdIcon: cafeSharp
-                }
-                ,
 
-                {
-                    title: 'User',
-                    url: '/users',
-                    iosIcon: airplaneSharp,
-                    mdIcon: airplaneSharp
-                }
-                ,
 
 
     ];

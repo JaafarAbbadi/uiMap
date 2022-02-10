@@ -3,24 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   /*ROUTES*/
-                { 
-                    path: '/categorys',
-                    component: () => import('../views/categorys/CategorysPage.vue')
-                },
-                { 
-                    path: '/categorys/:id',
-                    component: () => import('../views/categorys/CategoryPage.vue')
-                }
-                ,
-                { 
-                    path: '/users',
-                    component: () => import('../views/users/UsersPage.vue')
-                },
-                { 
-                    path: '/users/:id',
-                    component: () => import('../views/users/UserPage.vue')
-                }
-                ,
+
   
 ]
 
