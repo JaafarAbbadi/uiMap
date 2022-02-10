@@ -25,9 +25,15 @@ export const getCategory = (id: string): Promise<Category> => {
         else rej('category not found')
     })
 }
-export const getCategories = (limit: number, page: number): Promise<Category[]> => {
+export const getCategories = (limit: number, page: number, filter?: {[property: string]: any}): Promise<Category[]> => {
     return new Promise<Category[]>((res) => {
-        res(categories.slice(limit*(page-1), limit*page));
+        res(
+            filter? 
+            categories.slice(limit*(page-1), limit*page).filter(c => {
+                c.name.includes(filter?.name) && 
+                (c.description? c.description.includes(filter?.description): true)
+            }) : categories.slice(limit*(page-1), limit*page)
+        );
     })
 }
 export const updateCategory = (id: string, values:{[val: string]: any}): Promise<any> => {
