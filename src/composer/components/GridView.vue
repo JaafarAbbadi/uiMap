@@ -31,38 +31,83 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
+        <ion-footer>
+            <ion-toolbar>
+                <ion-title>PAGE: {{page}}</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button slot="start" color="primary" v-on:click="prev()">
+                        <ion-icon slot="icon-only" :icon="chevronBackCircleOutline"></ion-icon>
+                    </ion-button>
+                    <ion-item>
+                        <ion-label position="floating">Limit: </ion-label>
+                        <ion-input type="number" inputmode="numeric" @ionChange="refresh()" v-model="limit" ></ion-input>
+                    </ion-item>
+                    <ion-button color="primary" slot="end" v-on:click="next()" >
+                        <ion-icon slot="icon-only" :icon="chevronForwardCircleOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-footer>
     </ion-page>
 </template>
 
 <script>
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButton,
-         IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle
+         IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle,
+         IonLabel, IonInput, IonItem, IonFooter
 } from '@ionic/vue';
-import { add } from 'ionicons/icons';
+import { add ,
+        chevronBackCircleOutline, 
+        chevronForwardCircleOutline
+        } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 /*IMPORTS*/
 
 export default {
     components: {
         IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButtons,
-        IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle 
+        IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle,
+        IonLabel, IonInput, IonItem, IonFooter
     },
     data ()  {
         return {
             title: /*TITLE*/'',
             items: [],
+            limit: 3,
+            page: 1
         }
     },
     setup() {
         const router = useRouter();
-        return {router, add};
+        return {
+            router,
+            add,
+            chevronBackCircleOutline, 
+            chevronForwardCircleOutline
+        };
     },
     mounted(){
-        template.apiCollection.multipleRead(3,1).then(items => this.items = items);
-        console.log('users mounted')
+        template.apiCollection.multipleRead(this.limit,this.page).then(items => this.items = items);
     },
     unmounted: function () {
-        console.log('users unmounted')
+        console.log(this.title+ ' unmounted')
+    },
+        methods: {
+        refresh() {
+            console.log('Refreshing.... ')
+            template.apiCollection.multipleRead(this.limit,this.page).then(items => this.items = items);
+        },
+        prev() {
+            if(this.page > 1 ){
+                this.page--;
+                template.apiCollection.multipleRead(this.limit,this.page).then(items => this.items = items);
+            }
+            
+        },
+        next() {
+            this.page++;
+            template.apiCollection.multipleRead(this.limit,this.page).then(items => this.items = items);
+        }
     }
 }
 </script>
