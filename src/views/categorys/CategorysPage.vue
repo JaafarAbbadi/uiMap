@@ -27,14 +27,14 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButton } from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
-/*IMPORTS*/
+import { categoryTemplate as template } from '@/composer/templates/category.template';
 export default {
     components: {
         IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButtons,
     },
     data ()  {
         return {
-            title: /*TITLE*/'',
+            title: 'Category',
             items: [],
         }
     },

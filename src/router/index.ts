@@ -4,6 +4,15 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   /*ROUTES*/
                 { 
+                    path: '/categorys',
+                    component: () => import('../views/categorys/CategorysPage.vue')
+                },
+                { 
+                    path: '/categorys/:id',
+                    component: () => import('../views/categorys/CategoryPage.vue')
+                }
+                ,
+                { 
                     path: '/users',
                     component: () => import('../views/users/UsersPage.vue')
                 },
@@ -12,16 +21,7 @@ const routes: Array<RouteRecordRaw> = [
                     component: () => import('../views/users/UserPage.vue')
                 }
                 ,
-
   
-  {
-    path: '',
-    redirect: '/folder/Inbox'
-  },
-  {
-    path: '/folder/:id',
-    component: () => import ('../views/FolderPage.vue')
-  }
 ]
 
 const router = createRouter({

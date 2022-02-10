@@ -17,7 +17,7 @@
             <ion-grid fixed>
                 <ion-row>
                     <ion-col v-for="(item,index) of items" :key='index' >
-                        <ion-card @click="() => router.push('/'+title+'/'+item.id)">
+                        <ion-card @click="() => router.push('/'+title.toLowerCase()+'s/'+item.id)">
                             <ion-card-header>
                                 <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
                                 <img :src="item.photo"/>
@@ -40,7 +40,8 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
-import { getUsers } from '@/composer/fake-server/api';
+/*IMPORTS*/
+
 export default {
     components: {
         IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButtons,
@@ -48,7 +49,7 @@ export default {
     },
     data ()  {
         return {
-            title: 'Users',
+            title: /*TITLE*/'',
             items: [],
         }
     },
@@ -56,9 +57,8 @@ export default {
         const router = useRouter();
         return {router, add};
     },
-
-    mounted()  {
-        getUsers().then(us => this.items = us)
+    mounted(){
+        template.apiCollection.multipleRead(3,1).then(items => this.items = items);
         console.log('users mounted')
     },
     unmounted: function () {

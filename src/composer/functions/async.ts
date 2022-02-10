@@ -6,7 +6,7 @@ import { Icon } from '../types/icons';
 
 export const validateArguments = (args:string[]): Promise<string> => {
     return new Promise<string>((resolve,reject) => {
-        readDirectory('src/composer/models').then(files => {
+        readDirectory('models').then(files => {
             const models = files.map(f => f.split('.')[0]);
             const argsDict = argumentsToDictionary(args);
             // conditions
@@ -16,6 +16,7 @@ export const validateArguments = (args:string[]): Promise<string> => {
         }, err => reject(err))
     })
 }
+
 export const createDir = (dirName: string): Promise<void> => {
     return new Promise<void>((resolve) => mkdir(`${dirName}`,{}, () => resolve()))
 }
@@ -60,33 +61,37 @@ export const getViews = (view: 'list'| 'grid'): Promise<{listView: string, crudV
  * 
  * prepares a menu item, reads src/App.vue and inject (using string concat) a side menu item and the icon import
  */
-export const updateAppVue = (modelName: string, icon: Icon): Promise<void> => {
+export const updateAppVue = (models: {name: string, icon: Icon}[]): Promise<void> => {
     return new Promise<void>((resolve) => {
-        const menuItem = `
-            /*MENU ITEM*/
-            {
-                title: '${capitalizeFirstLetter(modelName)}',
-                url: '/${modelName}s',
-                iosIcon: ${icon.name}${capitalizeFirstLetter(icon.shape)},
-                mdIcon: ${icon.name}${capitalizeFirstLetter(icon.shape)}
-            }
-            `
+        
         read(`src/composer/layouts/base.layout.vue`).then(appBuff => {
             let appView = appBuff.toLocaleString();
-            appView = appView.split('/*ICON IMPORT*/')[0].concat(`/*ICON IMPORT*/ ${icon.name}${capitalizeFirstLetter(icon.shape)}, ${appView.split('/*ICON IMPORT*/')[1]}`);
-            appView = appView.split('/*MENU ITEM*/')[0].concat(`${menuItem},\n${appView.split('/*MENU ITEM*/')[1]}`);
-            appView = appView.split('/*ICON SETUP*/')[0].concat(`/*ICON SETUP*/ ${icon.name}${capitalizeFirstLetter(icon.shape)}, ${appView.split('/*ICON SETUP*/')[1]}`);
+            models.forEach(m => {
+                const menuItem = `
+                /*MENU ITEM*/
+                {
+                    title: '${capitalizeFirstLetter(m.name)}',
+                    url: '/${m.name}s',
+                    iosIcon: ${m.icon.name}${capitalizeFirstLetter(m.icon.shape)},
+                    mdIcon: ${m.icon.name}${capitalizeFirstLetter(m.icon.shape)}
+                }
+                `
+                appView = appView.split('/*ICON IMPORT*/')[0].concat(`/*ICON IMPORT*/ ${m.icon.name}${capitalizeFirstLetter(m.icon.shape)}, ${appView.split('/*ICON IMPORT*/')[1]}`);
+                appView = appView.split('/*MENU ITEM*/')[0].concat(`${menuItem},\n${appView.split('/*MENU ITEM*/')[1]}`);
+                appView = appView.split('/*ICON SETUP*/')[0].concat(`/*ICON SETUP*/ ${m.icon.name}${capitalizeFirstLetter(m.icon.shape)}, ${appView.split('/*ICON SETUP*/')[1]}`);    
+            })
+
             write(`src/App.vue`, appView).then(() => resolve())
         });
     })
 }
 
-export const updateRouter = (modelName: string): Promise<void> => {
+export const updateRouter = (modelNames: string[]): Promise<void> => {
     return new Promise<void>((resolve) => {
         // update router/index.ts 
-        read(`src/router/index.ts`).then(routesBuff => {
+        read(`src/composer/layouts/router.ts`).then(routesBuff => {
             let routesView = routesBuff.toLocaleString();
-            if(!routesView.includes(`import('../views/${modelName}s/${capitalizeFirstLetter(modelName)}sPage.vue')`)){
+            modelNames.forEach(modelName => {
                 routesView = routesView.split('/*ROUTES*/')[0].concat(`/*ROUTES*/
                 { 
                     path: '/${modelName}s',
@@ -98,7 +103,7 @@ export const updateRouter = (modelName: string): Promise<void> => {
                 }
                 ,${routesView.split('/*ROUTES*/')[1]}`
                 );    
-            }
+            })
             write(`src/router/index.ts`, routesView).then(() => resolve())
         })
     })

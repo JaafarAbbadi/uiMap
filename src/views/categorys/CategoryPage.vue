@@ -30,7 +30,7 @@ export default {
         IonToolbar
     },
     data: () => {return {
-        title: /*TITLE*/''
+        title: 'Category'
     }}
 }
 </script>
