@@ -101,7 +101,7 @@ export const getIconsInjectionFormat = (form: Form) : { definitionIcons: string,
 }
 
 export const injectCrudView = (modelName: string, crudView: string, icons: { definitionIcons: string, importIcons: string}) : string => {
-    injectCode(crudView, "/*TITLE*/''", `'${capitalizeFirstLetter(modelName)}'`);
+    crudView = injectCode(crudView, "/*TITLE*/''", `'${capitalizeFirstLetter(modelName)}'`);
     crudView = injectCode(crudView, `/*IMPORTS*/`, `import { ${modelName}Template as template } from '@/composer/templates/${modelName}.template';`)
     // inject Icons in Crud View from template
     crudView = injectCode(crudView, `/*ICON DEFINITION*/`, icons.definitionIcons);

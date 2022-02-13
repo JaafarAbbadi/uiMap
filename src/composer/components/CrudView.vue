@@ -6,17 +6,17 @@
                     <ion-buttons slot="start">
                         <ion-menu-button color="primary"></ion-menu-button>
                     </ion-buttons>
-                <ion-title>{{ title }}</ion-title>
+                <ion-title>{{title +' / '+ item[itemView.title] }}</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content>
             <ion-item v-for="(i,index) of form" :key="index" >
-                <ion-label position="fixed">{{i[0]}}</ion-label>
+                <ion-label position="floating">{{i[0]}}</ion-label>
                 <ion-icon slot="start" :icon="icons[i[1].icon.iconName]"></ion-icon>
                 
                 <ion-input  v-if="i[1].formInput === 'textField'"  type="text"  v-model="item[i[0]]"     @ionChange="validate()"></ion-input>
                 <ion-input  v-if="i[1].formInput === 'email'"      type="email" v-model="item[i[0]]"     @ionChange="validate()" autocomplete="email" inputmode="email"></ion-input>
-                <ion-note v-if="errors[i[0]]?.length" :color="errors[i[0]]?.length ? 'danger': 'primary'">
+                <ion-note v-if="errors[i[0]]?.length" color="danger">
                     <p v-for="(err, i) of errors[i[0]]" :key="i">{{err}}</p>
                 </ion-note>
                 
@@ -55,6 +55,7 @@ export default {
     data: () => {return {
         title: /*TITLE*/'',
         form: Object.entries(template.form),
+        itemView: template.itemView,
         item: {},
         errors: {},
         icons: {
@@ -82,7 +83,7 @@ export default {
                         if(!validator.func(value,validator.params)){
                             this.errors[title].push(validator.error);
                         } else {
-                            this.errors[title].indexOf(validator.error)? this.errors[title].splice(this.errors[title].indexOf(validator.error),1) : ''; 
+                            this.errors[title].indexOf(validator.error)> -1? this.errors[title].splice(this.errors[title].indexOf(validator.error), 1) : ''; 
                         }
                     })
                 }

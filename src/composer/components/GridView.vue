@@ -19,12 +19,16 @@
                     <ion-col v-for="(item,index) of items" :key='index' >
                         <ion-card @click="() => router.push('/'+title.toLowerCase()+'s/'+item.id)">
                             <ion-card-header>
-                                <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
-                                <img :src="item.photo"/>
-                                <ion-card-title>{{item.name}}</ion-card-title>
+                                <ion-card-subtitle>{{item[itemView.subtitle]}}</ion-card-subtitle>
+                                <img class="ion-margin-top" :src="item[itemView.photo]"/>
+                                <ion-card-title>{{item[itemView.title]}}</ion-card-title>
                             </ion-card-header>
-                            <ion-card-content>
-                                Awesome content
+                            <ion-card-content >
+                                <ion-text v-if="itemView.content">{{item[itemView.content]}}</ion-text>
+                                <ion-row v-if="itemView.listContent">
+                                    <ion-chip v-for="(chip,index) of item[itemView.listContent]" :key="index" color="secondary" outline="true"><ion-label>{{chip}}</ion-label></ion-chip>
+                                </ion-row>
+                                
                             </ion-card-content>
                         </ion-card>
                     </ion-col>
@@ -33,15 +37,15 @@
         </ion-content>
         <ion-footer>
             <ion-toolbar>
-                <ion-title>PAGE: {{page}}</ion-title>
+                <ion-item>
+                    <ion-icon slot="start" :icon="layers"></ion-icon>
+                    <ion-input type="number" inputmode="numeric" @ionChange="refresh()" v-model="limit"></ion-input>
+                </ion-item>
                 <ion-buttons slot="end">
                     <ion-button slot="start" color="primary" v-on:click="prev()">
                         <ion-icon slot="icon-only" :icon="chevronBackCircleOutline"></ion-icon>
                     </ion-button>
-                    <ion-item>
-                        <ion-label position="floating">Limit: </ion-label>
-                        <ion-input type="number" inputmode="numeric" @ionChange="refresh()" v-model="limit" ></ion-input>
-                    </ion-item>
+                    <ion-icon :icon='documents' class="ion-margin"></ion-icon> {{page}}    
                     <ion-button color="primary" slot="end" v-on:click="next()" >
                         <ion-icon slot="icon-only" :icon="chevronForwardCircleOutline"></ion-icon>
                     </ion-button>
@@ -54,11 +58,13 @@
 <script>
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButton,
          IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle,
-         IonLabel, IonInput, IonItem, IonFooter
+          IonInput, IonItem, IonFooter, IonText, IonLabel, IonChip, 
 } from '@ionic/vue';
 import { add ,
         chevronBackCircleOutline, 
-        chevronForwardCircleOutline
+        chevronForwardCircleOutline,
+        documents,
+        layers
         /*ICON IMPORT*/
         } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
@@ -68,14 +74,15 @@ export default {
     components: {
         IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButtons,
         IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle,
-        IonLabel, IonInput, IonItem, IonFooter
+         IonInput, IonItem, IonFooter, IonText, IonLabel, IonChip,
     },
     data ()  {
         return {
             title: /*TITLE*/'',
             items: [],
             limit: 3,
-            page: 1
+            page: 1,
+            itemView: template.itemView
         }
     },
     setup() {
@@ -85,6 +92,8 @@ export default {
             add,
             chevronBackCircleOutline, 
             chevronForwardCircleOutline,
+            documents,
+            layers,
             /*ICON SETUP*/
         };
     },

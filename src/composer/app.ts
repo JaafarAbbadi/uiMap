@@ -3,7 +3,7 @@ import { getViews , updateAppVue, updateRouter, updateModelViews, injectListView
 import { templates } from './templates';
     
 
-// iterate templates in template index
+// iterate templates in template index & create templates views
 Object.entries(templates).forEach(([modelName, template]) => {
     
     console.log(`creating ${modelName} module ....`);
@@ -18,6 +18,7 @@ Object.entries(templates).forEach(([modelName, template]) => {
         })
     });
 });
+// update router and App.vue
 updateRouter(Object.keys(templates)).then(
     () => updateAppVue(Object.entries(templates).map(m => {return {name: m[0], icon: m[1].icon }})).then(
         () => console.log(`App.vue & router/index.ts are updated`)

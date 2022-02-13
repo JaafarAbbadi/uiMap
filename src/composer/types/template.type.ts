@@ -11,9 +11,25 @@ export interface Form  {[param: string]: {
     icon?: Icon 
 }}
 export interface Template <T>{ 
-    sm: string[]; // list of properties for small view. must exist in model properties
-    view: View;
     icon: Icon;
+    /* List View Configurations*/
+    view: View;
+    itemView: ItemView;
+    /* Item View Configurations */
     form: Form,
+
+
     apiCollection: ApiCollection<T>
 }
+
+export interface ItemView  {
+    // list item & grid card
+    title: string;
+    subtitle?: string;
+    photo?: string;
+    note?: string;
+    images?:  string;
+    content?: string;
+    listContent?: string;
+    links?: string;
+};

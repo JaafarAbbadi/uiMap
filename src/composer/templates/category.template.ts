@@ -6,7 +6,12 @@ import { Template } from "../types/template.type";
 
 export const categoryTemplate: Template<Category>  = {
     view: 'list',
-    sm: ['name', 'photo'],
+    itemView: {
+        title: 'name',
+        photo: 'photo',
+        subtitle: 'description',
+        note: 'description'
+    },
     apiCollection: {
         singleCreate: createCategory,
         singleRead: getCategory,

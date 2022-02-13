@@ -14,23 +14,24 @@
         <ion-content>
             <ion-list>
                 <ion-item v-for="(item,index) of items" :key='index' @click="() => router.push('/'+title.toLowerCase()+'s/'+item.id)" >
-                    <ion-avatar slot="start"> <img :src="item.photo"/> </ion-avatar>
-                    <ion-label> {{item.name}}</ion-label>
-                    <ion-note></ion-note>
+                    <ion-avatar v-if="itemView.photo" slot="start"> <img :src="item[itemView.photo]"/> </ion-avatar>
+                    <ion-label> {{item[itemView.title]}}</ion-label>
+                    <ion-text v-if="itemView.subtitle">{{item[itemView.subtitle]}}</ion-text>
+                    <ion-note v-if="itemView.note">{{item[itemView.note]}}</ion-note>
                 </ion-item>
             </ion-list>
         </ion-content>
         <ion-footer>
             <ion-toolbar>
-                <ion-title>PAGE: {{page}}</ion-title>
+                <ion-item>
+                    <ion-icon slot="start" :icon="layers"></ion-icon>
+                    <ion-input type="number" inputmode="numeric" @ionChange="refresh()" v-model="limit"></ion-input>
+                </ion-item>
                 <ion-buttons slot="end">
                     <ion-button slot="start" color="primary" v-on:click="prev()">
                         <ion-icon slot="icon-only" :icon="chevronBackCircleOutline"></ion-icon>
                     </ion-button>
-                    <ion-item>
-                        <ion-label position="floating">Limit: </ion-label>
-                        <ion-input type="number" inputmode="numeric" @ionChange="refresh()" v-model="limit" ></ion-input>
-                    </ion-item>
+                    <ion-icon :icon='documents' class="ion-margin"></ion-icon> {{page}}    
                     <ion-button color="primary" slot="end" v-on:click="next()" >
                         <ion-icon slot="icon-only" :icon="chevronForwardCircleOutline"></ion-icon>
                     </ion-button>
@@ -42,13 +43,14 @@
 
 <script>
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButton,
-        IonInput, IonFooter
+        IonInput, IonFooter, IonText
 
 } from '@ionic/vue';
 import { 
     add, 
     chevronBackCircleOutline, 
     chevronForwardCircleOutline,
+    documents, layers,
     /*ICON IMPORT*/
 } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
@@ -56,14 +58,15 @@ import { useRouter } from 'vue-router';
 export default {
     components: {
         IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButtons,
-        IonInput, IonFooter
+        IonInput, IonFooter, IonText
     },
     data ()  {
         return {
             title: /*TITLE*/'',
             items: [],
             limit: 3,
-            page: 1
+            page: 1,
+            itemView: template.itemView
         }
     },
     setup() {
@@ -73,6 +76,8 @@ export default {
             add,
             chevronBackCircleOutline, 
             chevronForwardCircleOutline,
+            documents,
+            layers,
             /*ICON SETUP*/
             };
     },

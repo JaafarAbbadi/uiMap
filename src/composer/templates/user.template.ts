@@ -5,7 +5,12 @@ import { Template } from "../types/template.type";
 
 export const userTemplate: Template<User>  = {
     view: 'grid',
-    sm: ['name', 'photo'],
+    itemView: {
+        title: 'name',
+        photo: 'photo',
+        subtitle: 'email',
+        listContent: 'claims'
+    },
     apiCollection: {
         singleCreate: createUser,
         singleRead: getUser,
@@ -16,7 +21,7 @@ export const userTemplate: Template<User>  = {
         multipleDelete: deleteUsers,
         multipleUpdate: updateUsers
     },
-    icon: {name: 'airplane', shape: 'sharp'},
+    icon: {name: 'person', shape: ''},
     form: {
         name: {
             formInput: 'textField',
