@@ -36,7 +36,7 @@ export const getUsers = (limit: number, page: number, filter?: {[property: strin
 export const updateUser = (id: string, values:{[val: string]: any}): Promise<any> => {
     return new Promise<any>((res,rej) => {
         const u: any = users.find(u => u.id === id);
-        if(values.id) rej("can't update id")
+        if(values.id != id) rej("can't update id")
         if(u) {
             Object.keys(values).forEach(k => {
                 u[k] = values[k]

@@ -43,7 +43,7 @@ export const getCategories = (limit: number, page: number, filter?: {[property: 
 export const updateCategory = (id: string, values:{[val: string]: any}): Promise<any> => {
     return new Promise<any>((res,rej) => {
         const c: any = categories.find(c => c.id === id);
-        if(values.id) rej("can't update id")
+        if(values.id != values.id) rej("can't update id")
         if(c) {
             Object.keys(values).forEach(k => {
                 c[k] = values[k]
