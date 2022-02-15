@@ -22,6 +22,7 @@
                     <ion-input  v-if="i[1].formInput === 'textField'"  type="text"      v-model="item[i[0]]"  @ionChange="validate()"></ion-input>
                     <ion-input  v-if="i[1].formInput === 'email'"      type="email"     v-model="item[i[0]]"  @ionChange="validate()" autocomplete="email" inputmode="email"></ion-input>
                     <ion-input  v-if="i[1].formInput === 'password'"   type="password"  v-model="item[i[0]]"  @ionChange="validate()" autocomplete="password" inputmode="password"></ion-input>
+                    
                     <ion-input  v-if="i[1].formInput === 'image'"      type="url"       v-model="item[i[0]]"  @ionChange="validate()"></ion-input>
                     
                     <ion-select v-if="i[1].formInput.type === 'multi'" multiple="true" v-model="item[i[0]]">
