@@ -23,4 +23,5 @@ export type FormInput =
     'range'         |
     'location'      |
     'area'          |
-    'link'          
+    'link'          |
+    'html'
