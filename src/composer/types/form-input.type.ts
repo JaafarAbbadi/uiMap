@@ -9,7 +9,7 @@ export type FormInput =
     'videos'        |   // Storage -- video player -- slider
     'audio'         |   // Storage -- audio player -- string;
     'audios'        |   // Storage -- audio player -- slider;
-    'textfield'     |
+    'textField'     |
     'password'      |   
     'email'         |   
     'phoneNumber'   |   // globalized with country codes
