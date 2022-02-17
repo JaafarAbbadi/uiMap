@@ -4,7 +4,7 @@
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
           <ion-list id="inbox-list">
-            <ion-list-header>Inbox</ion-list-header>
+            <ion-list-header>{{title}}</ion-list-header>
             <ion-note>hi@ionicframework.com</ion-note>
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
@@ -34,10 +34,15 @@
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { /*ICON IMPORT*/ cafeSharp,  airplaneSharp,  bookmarkOutline, bookmarkSharp} from 'ionicons/icons';
+import { /*ICON IMPORT*/ cafeSharp,  person,  bookmarkOutline, bookmarkSharp} from 'ionicons/icons';
 
 export default defineComponent({
   name: 'App',
+  data(){
+    return{
+
+    }
+  },
   components: {
     IonApp, 
     IonContent, 
@@ -58,7 +63,21 @@ export default defineComponent({
     
                 
                 /*MENU ITEM*/
+                {
+                    title: 'Category',
+                    url: '/categorys',
+                    iosIcon: cafeSharp,
+                    mdIcon: cafeSharp
+                }
+                ,
 
+                {
+                    title: 'User',
+                    url: '/users',
+                    iosIcon: person,
+                    mdIcon: person
+                }
+                ,
 
 
     ];
@@ -76,7 +95,7 @@ export default defineComponent({
       appPages, 
       labels,
       bookmarkOutline, bookmarkSharp,
-      /*ICON SETUP*/ cafeSharp,  airplaneSharp, 
+      /*ICON SETUP*/ cafeSharp,  person, 
       isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   }

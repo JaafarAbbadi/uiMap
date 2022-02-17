@@ -4,7 +4,7 @@
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
           <ion-list id="inbox-list">
-            <ion-list-header>Inbox</ion-list-header>
+            <ion-list-header>{{title}}</ion-list-header>
             <ion-note>hi@ionicframework.com</ion-note>
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
@@ -38,6 +38,11 @@ import { /*ICON IMPORT*/ bookmarkOutline, bookmarkSharp} from 'ionicons/icons';
 
 export default defineComponent({
   name: 'App',
+  data(){
+    return{
+
+    }
+  },
   components: {
     IonApp, 
     IonContent, 

@@ -2,6 +2,18 @@ import { createDir} from './functions/async';
 import { getViews , updateAppVue, updateRouter, updateModelViews, injectListView, injectCrudView, getIconsInjectionFormat} from './functions/injections'
 import { templates } from './templates';
     
+interface ApplicationDescription {
+    title: string;
+    motto?: string;
+    slogan?: string;
+    logo?: string;
+    description?: string;
+    tutorial: {image: string; description: string}[];
+    keys: {[name: string]: string}
+}
+
+// TODO: global application information;
+
 
 // iterate templates in template index & create templates views
 Object.entries(templates).forEach(([modelName, template]) => {
@@ -13,6 +25,7 @@ Object.entries(templates).forEach(([modelName, template]) => {
             // inject Views
             views.listView = injectListView(modelName, views.listView)
             views.crudView = injectCrudView(modelName, views.crudView, getIconsInjectionFormat(template.form));
+            views.singleCreate = injectCrudView(modelName, views.singleCreate, getIconsInjectionFormat(template.form));
             // create files
             updateModelViews(modelName, views).then();
         })

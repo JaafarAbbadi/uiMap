@@ -22,9 +22,7 @@
                     <ion-input  v-if="i[1].formInput === 'textField'"  type="text"      v-model="item[i[0]]"  @ionChange="validate()"></ion-input>
                     <ion-input  v-if="i[1].formInput === 'email'"      type="email"     v-model="item[i[0]]"  @ionChange="validate()" autocomplete="email" inputmode="email"></ion-input>
                     <ion-input  v-if="i[1].formInput === 'password'"   type="password"  v-model="item[i[0]]"  @ionChange="validate()" autocomplete="password" inputmode="password"></ion-input>
-                    
                     <ion-input  v-if="i[1].formInput === 'image'"      type="url"       v-model="item[i[0]]"  @ionChange="validate()"></ion-input>
-                    
                     <ion-select v-if="i[1].formInput.type === 'multi'" multiple="true" v-model="item[i[0]]">
                         <ion-select-option v-for="(op, index) of i[1].formInput.options" :key="index" :value="op">
                             {{op}}
@@ -60,9 +58,9 @@ import {
     chevronBackCircleOutline, 
     chevronForwardCircleOutline,
     alert,
-    /*ICONS IMPORT*/
+    enterOutline,mailOutline,imageOutline,accessibilityOutline
 } from 'ionicons/icons';
-/*IMPORTS*/
+import { userTemplate as template } from '@/composer/templates/user.template';
 export default {
     components: {
         IonButtons,
@@ -81,14 +79,18 @@ export default {
         IonBackButton,
     },
     data: () => {return {
-        title: /*TITLE*/'',
+        title: 'User',
         form: Object.entries(template.form),
         itemView: template.itemView,
         item: {},
         errors: {},
         valid: false,
         icons: {
-            /*ICON DEFINITION*/
+            'enterOutline': enterOutline, 
+			'mailOutline': mailOutline, 
+			'imageOutline': imageOutline, 
+			'accessibilityOutline': accessibilityOutline, 
+			
         }
     }},
     mounted ()  {
@@ -140,7 +142,7 @@ export default {
             chevronBackCircleOutline, 
             chevronForwardCircleOutline,
             alert,
-            /*ICONS SETUP*/
+            enterOutline,mailOutline,imageOutline,accessibilityOutline
         };
     },
 }

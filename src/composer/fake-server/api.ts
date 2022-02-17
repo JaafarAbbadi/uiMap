@@ -5,7 +5,7 @@ import { users } from "./data"
 // CRUD for 1 and many
 export const createUser = (u: User): Promise<any> => {
     return new Promise<any>((res,rej) => {
-        if (u) res(users.push(u))
+        if (u) res(users.push({...u, id: (Math.max(...users.map(user => +(user.id))) + 1).toString()}))
         else rej('input valid user') 
     })
 }

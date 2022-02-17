@@ -60,7 +60,7 @@ import {
     /*ICON IMPORT*/
 } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
-/*IMPORTS*/
+import { categoryTemplate as template } from '@/composer/templates/category.template';
 export default {
     components: {
         IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButtons,
@@ -68,7 +68,7 @@ export default {
     },
     data ()  {
         return {
-            title: /*TITLE*/'',
+            title: 'Category',
             items: [],
             limit: 3,
             page: 1,

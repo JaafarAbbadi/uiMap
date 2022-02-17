@@ -3,13 +3,17 @@ import { Form } from "../types/template.type";
 import { read, write } from "./async";
 import { capitalizeFirstLetter } from "./direct";
 
-export const getViews = (view: 'list'| 'grid'): Promise<{listView: string, crudView: string}> => {
+export const getViews = (view: 'list'| 'grid'): Promise<{listView: string, crudView: string, singleCreate: string}> => {
     const v = capitalizeFirstLetter(view);
-    return new Promise<{listView: string, crudView: string}>((res) => {
-        read(`src/composer/components/${v}View.vue`).then(listBuff => read(`src/composer/components/CrudView.vue`).then(crudBuff => res({
+    return new Promise<{listView: string, crudView: string, singleCreate: string}>(async (res) => {
+        const listBuff = await read(`src/composer/components/${v}View.vue`);
+        const crudBuff = await read(`src/composer/components/singleUpdate.vue`);
+        const singleCreate = await read(`src/composer/components/singleCreate.vue`);
+        res({
             listView: listBuff.toLocaleString(),
-            crudView: crudBuff.toLocaleString()
-        }))) 
+            crudView: crudBuff.toLocaleString(),
+            singleCreate: singleCreate.toLocaleString()
+        })
     })
 }
 
@@ -69,15 +73,12 @@ export const updateRouter = (modelNames: string[]): Promise<void> => {
     })
 }
 
-export const updateModelViews = (modelName: string, views: {listView: string, crudView: string}): Promise<void> => {
-    return new Promise<void>((resolve) => {
-        write(`src/views/${modelName}s/${capitalizeFirstLetter(modelName)}sPage.vue`, views.listView).then(() => {
-            console.log(`${modelName}s has been created`);
-            write(`src/views/${modelName}s/${capitalizeFirstLetter(modelName)}Page.vue`, views.crudView).then(() => {
-                console.log(`${modelName} has been created`);
-                resolve();
-            });
-        });
+export const updateModelViews = (modelName: string, views: {listView: string, crudView: string, singleCreate: string}): Promise<void> => {
+    return new Promise<void>(async (resolve) => {
+        await write(`src/views/${modelName}s/${capitalizeFirstLetter(modelName)}sPage.vue`, views.listView)
+        await write(`src/views/${modelName}s/${capitalizeFirstLetter(modelName)}Page.vue`, views.crudView)
+        await write(`src/views/${modelName}s/${capitalizeFirstLetter(modelName)}SingleCreate.vue`, views.singleCreate);
+        resolve();
     });
 }
 

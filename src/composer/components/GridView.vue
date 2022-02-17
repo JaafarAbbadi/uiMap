@@ -8,9 +8,16 @@
                     <ion-menu-button color="primary"></ion-menu-button>
                 </ion-buttons>
                 <ion-title>{{ title }}</ion-title>
-                    <ion-button slot="end" color="primary">
-                        <ion-icon slot="icon-only" :icon="add"></ion-icon>
+                
+                <ion-buttons slot="end">
+                    <ion-button color="primary">
+                        <ion-icon slot="icon-only" :icon="filter" ></ion-icon>
                     </ion-button>
+                    <ion-button  color="primary">
+                        <ion-icon slot="icon-only" :icon="add" ></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                
             </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -64,7 +71,9 @@ import { add ,
         chevronBackCircleOutline, 
         chevronForwardCircleOutline,
         documents,
-        layers
+        layers,
+        filter,
+
         /*ICON IMPORT*/
         } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
@@ -94,6 +103,8 @@ export default {
             chevronForwardCircleOutline,
             documents,
             layers,
+            filter,
+
             /*ICON SETUP*/
         };
     },

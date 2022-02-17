@@ -1,31 +1,46 @@
+
+
 <template>
     <ion-page>        
         <ion-header :translucent="true">
             <ion-toolbar>
-                
                 <ion-buttons slot="start">
                     <ion-menu-button color="primary"></ion-menu-button>
                 </ion-buttons>
-                
                 <ion-title>{{ title }}</ion-title>
                 
                 <ion-buttons slot="end">
+                    <ion-button color="primary">
+                        <ion-icon slot="icon-only" :icon="filter" ></ion-icon>
+                    </ion-button>
                     <ion-button  color="primary">
-                        <ion-icon slot="icon-only" :icon="add"></ion-icon>
+                        <ion-icon slot="icon-only" :icon="add" ></ion-icon>
                     </ion-button>
                 </ion-buttons>
-                    
+                
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <ion-list>
-                <ion-item v-for="(item,index) of items" :key='index' @click="() => router.push('/'+title.toLowerCase()+'s/'+item.id)" >
-                    <ion-avatar v-if="itemView.photo" slot="start"> <img :src="item[itemView.photo]"/> </ion-avatar>
-                    <ion-label> {{item[itemView.title]}}</ion-label>
-                    <ion-text v-if="itemView.subtitle">{{item[itemView.subtitle]}}</ion-text>
-                    <ion-note v-if="itemView.note">{{item[itemView.note]}}</ion-note>
-                </ion-item>
-            </ion-list>
+            <ion-grid fixed>
+                <ion-row>
+                    <ion-col v-for="(item,index) of items" :key='index' >
+                        <ion-card @click="() => router.push('/'+title.toLowerCase()+'s/'+item.id)">
+                            <ion-card-header>
+                                <ion-card-subtitle>{{item[itemView.subtitle]}}</ion-card-subtitle>
+                                <img class="ion-margin-top" :src="item[itemView.photo]"/>
+                                <ion-card-title>{{item[itemView.title]}}</ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content >
+                                <ion-text v-if="itemView.content">{{item[itemView.content]}}</ion-text>
+                                <ion-row v-if="itemView.listContent">
+                                    <ion-chip v-for="(chip,index) of item[itemView.listContent]" :key="index" color="secondary" outline="true"><ion-label>{{chip}}</ion-label></ion-chip>
+                                </ion-row>
+                                
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-content>
         <ion-footer>
             <ion-toolbar>
@@ -48,27 +63,31 @@
 </template>
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButton,
-        IonInput, IonFooter, IonText
-
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButton,
+         IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle,
+          IonInput, IonItem, IonFooter, IonText, IonLabel, IonChip, 
 } from '@ionic/vue';
-import { 
-    add, 
-    chevronBackCircleOutline, 
-    chevronForwardCircleOutline,
-    documents, layers,
-    /*ICON IMPORT*/
-} from 'ionicons/icons';
+import { add ,
+        chevronBackCircleOutline, 
+        chevronForwardCircleOutline,
+        documents,
+        layers,
+        filter,
+
+        /*ICON IMPORT*/
+        } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
-/*IMPORTS*/
+import { userTemplate as template } from '@/composer/templates/user.template';
+
 export default {
     components: {
-        IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonAvatar, IonLabel, IonNote, IonItem, IonIcon, IonButtons,
-        IonInput, IonFooter, IonText
+        IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonIcon, IonButtons,
+        IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle,
+         IonInput, IonItem, IonFooter, IonText, IonLabel, IonChip,
     },
     data ()  {
         return {
-            title: /*TITLE*/'',
+            title: 'User',
             items: [],
             limit: 3,
             page: 1,
@@ -84,18 +103,18 @@ export default {
             chevronForwardCircleOutline,
             documents,
             layers,
-            /*ICON SETUP*/
-            };
-    },
+            filter,
 
-    mounted()  {
+            /*ICON SETUP*/
+        };
+    },
+    mounted(){
         template.apiCollection.multipleRead(this.limit,this.page).then(items => this.items = items);
-        console.log(this.title, ' mounted')
     },
     unmounted: function () {
-        console.log(this.title, ' unmounted')
+        console.log(this.title+ ' unmounted')
     },
-    methods: {
+        methods: {
         refresh() {
             console.log('Refreshing.... ')
             template.apiCollection.multipleRead(this.limit,this.page).then(items => this.items = items);
@@ -105,6 +124,7 @@ export default {
                 this.page--;
                 template.apiCollection.multipleRead(this.limit,this.page).then(items => this.items = items);
             }
+            
         },
         next() {
             this.page++;
