@@ -58,7 +58,7 @@ import {
     chevronBackCircleOutline, 
     chevronForwardCircleOutline,
     alert,
-    enterOutline,mailOutline,imageOutline,accessibilityOutline
+    optionsSharp,mailOutline,imageOutline,accessibilityOutline
 } from 'ionicons/icons';
 import { userTemplate as template } from '@/composer/templates/user.template';
 export default {
@@ -86,7 +86,7 @@ export default {
         errors: {},
         valid: false,
         icons: {
-            'enterOutline': enterOutline, 
+            'optionsSharp': optionsSharp, 
 			'mailOutline': mailOutline, 
 			'imageOutline': imageOutline, 
 			'accessibilityOutline': accessibilityOutline, 
@@ -141,7 +141,7 @@ export default {
             chevronBackCircleOutline, 
             chevronForwardCircleOutline,
             alert,
-            enterOutline,mailOutline,imageOutline,accessibilityOutline
+            optionsSharp,mailOutline,imageOutline,accessibilityOutline
         };
     },
 }
