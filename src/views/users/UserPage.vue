@@ -14,7 +14,6 @@
             <ion-list>
                 <!-- i[0] = form control name, i[1] = form control parameters {formInput: '', icon: '', validators: () => {} []} -->
                 <ion-item v-for="(i,index) of form" :key="index" >
-                    
                     <ion-icon :icon="alert" v-if="errors[i[0]]?.length" color="danger" slot="end"></ion-icon>
                     <ion-label :color="errors[i[0]]?.length? 'danger' : 'primary'" position="floating">{{i[0].toUpperCase()}}</ion-label>
                     <ion-icon  :color="errors[i[0]]?.length? 'danger' : 'primary'" slot="start" :icon="icons[i[1].icon.iconName]"></ion-icon>
@@ -53,12 +52,13 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
          IonBackButton,
 
 } from '@ionic/vue';
+
 import {
     add, 
     chevronBackCircleOutline, 
     chevronForwardCircleOutline,
     alert,
-    enterOutline,mailOutline,imageOutline,accessibilityOutline
+    optionsSharp,mailOutline,imageOutline,accessibilityOutline
 } from 'ionicons/icons';
 import { userTemplate as template } from '@/composer/templates/user.template';
 export default {
@@ -86,7 +86,7 @@ export default {
         errors: {},
         valid: false,
         icons: {
-            'enterOutline': enterOutline, 
+            'optionsSharp': optionsSharp, 
 			'mailOutline': mailOutline, 
 			'imageOutline': imageOutline, 
 			'accessibilityOutline': accessibilityOutline, 
@@ -131,7 +131,8 @@ export default {
             })
         },
         save(){
-            template.apiCollection.singleUpdate(this.item.id, this.item ).then(res => console.log(res))
+            template.apiCollection.singleUpdate(this.item.id, this.item ).then(res => console.log(res));
+            this.router.push(`/${template.title}`)
         }
     },
     setup() {
@@ -142,7 +143,7 @@ export default {
             chevronBackCircleOutline, 
             chevronForwardCircleOutline,
             alert,
-            enterOutline,mailOutline,imageOutline,accessibilityOutline
+            optionsSharp,mailOutline,imageOutline,accessibilityOutline
         };
     },
 }

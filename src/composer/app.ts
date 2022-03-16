@@ -1,7 +1,11 @@
 import { createDir} from './functions/async';
 import { getViews , updateAppVue, updateRouter, updateModelViews, injectListView, injectCrudView, getIconsInjectionFormat} from './functions/injections'
 import { templates } from './templates';
-    
+
+
+
+
+
 interface ApplicationDescription {
     title: string;
     motto?: string;
@@ -17,11 +21,13 @@ interface ApplicationDescription {
 
 // iterate templates in template index & create templates views
 Object.entries(templates).forEach(([modelName, template]) => {
-    
+
+
     console.log(`creating ${modelName} module ....`);
         // create model list & crud pages & folders
     createDir(`src/views/${modelName}s`).then(() => {
         getViews(template.view).then(views => {            
+
             // inject Views
             views.listView = injectListView(modelName, views.listView)
             views.crudView = injectCrudView(modelName, views.crudView, getIconsInjectionFormat(template.form));
@@ -38,3 +44,4 @@ updateRouter(Object.keys(templates)).then(
     )
 )
 
+console.log('hello world')

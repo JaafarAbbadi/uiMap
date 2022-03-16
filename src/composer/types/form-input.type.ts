@@ -2,7 +2,6 @@ import { Selection } from "./selection.type";
 
 export type FormInput = 
     Selection       |   // done missing limited selections
-
     'image'         |   // Storage -- main photo -- string
     'images'        |   // Storage -- slider -- string[]
     'video'         |   // Storage -- video player string

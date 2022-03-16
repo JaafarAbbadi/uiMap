@@ -21,12 +21,16 @@
 </template>
 
 <script>
+import {IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonBackButton, IonContent, IonFooter} from '@ionic/vue'
 export default {
     data(){
         
         return{
             title: 'Home'
         }
+    },
+    components: {
+        IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonBackButton, IonContent, IonFooter
     }
 }
 </script>

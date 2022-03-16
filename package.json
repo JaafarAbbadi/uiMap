@@ -1,5 +1,5 @@
 {
-  "name": "vueIonic",
+  "name": "vue-ionic",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,10 +13,13 @@
   "config": {},
   "dependencies": {
     "@capacitor/core": "3.3.4",
+    "@ionic/storage": "^3.0.6",
     "@ionic/vue": "^6.0.0",
     "@ionic/vue-router": "^6.0.0",
+    "@types/parse": "^2.18.13",
     "core-js": "^3.6.5",
-    "rxjs": "^7.5.2",
+    "parse": "^3.4.1",
+    "rxjs": "^7.5.5",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12"
   },

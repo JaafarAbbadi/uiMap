@@ -1,7 +1,8 @@
 
-export interface Category {
-    id: string;
-    name: string;
+export class Category {
+    id?: string;
+    name?: string;
     photo?: string;
     description?: string;
+    constructor(){}
 }

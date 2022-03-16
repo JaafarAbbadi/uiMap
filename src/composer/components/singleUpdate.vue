@@ -14,7 +14,6 @@
             <ion-list>
                 <!-- i[0] = form control name, i[1] = form control parameters {formInput: '', icon: '', validators: () => {} []} -->
                 <ion-item v-for="(i,index) of form" :key="index" >
-                    
                     <ion-icon :icon="alert" v-if="errors[i[0]]?.length" color="danger" slot="end"></ion-icon>
                     <ion-label :color="errors[i[0]]?.length? 'danger' : 'primary'" position="floating">{{i[0].toUpperCase()}}</ion-label>
                     <ion-icon  :color="errors[i[0]]?.length? 'danger' : 'primary'" slot="start" :icon="icons[i[1].icon.iconName]"></ion-icon>
@@ -53,6 +52,7 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
          IonBackButton,
 
 } from '@ionic/vue';
+
 import {
     add, 
     chevronBackCircleOutline, 
@@ -127,7 +127,8 @@ export default {
             })
         },
         save(){
-            template.apiCollection.singleUpdate(this.item.id, this.item ).then(res => console.log(res))
+            template.apiCollection.singleUpdate(this.item.id, this.item ).then(res => console.log(res));
+            this.router.push(`/${template.title}`)
         }
     },
     setup() {

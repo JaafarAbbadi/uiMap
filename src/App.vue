@@ -34,13 +34,13 @@
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { /*ICON IMPORT*/ cafeSharp,  person,  bookmarkOutline, bookmarkSharp} from 'ionicons/icons';
+import { /*ICON IMPORT*/ cafeSharp,  person,  bookmarkOutline, bookmarkSharp, home} from 'ionicons/icons';
 
 export default defineComponent({
   name: 'App',
   data(){
     return{
-
+      title: 'hello'
     }
   },
   components: {
@@ -60,6 +60,12 @@ export default defineComponent({
   setup() {
     const selectedIndex = ref(0);
     const appPages: any = [
+      {
+        title: 'Home',
+        url: '/',
+        iosIcon: home,
+        mdIcon: home
+      },
     
                 
                 /*MENU ITEM*/
@@ -94,7 +100,7 @@ export default defineComponent({
       selectedIndex,
       appPages, 
       labels,
-      bookmarkOutline, bookmarkSharp,
+      bookmarkOutline, bookmarkSharp, home,
       /*ICON SETUP*/ cafeSharp,  person, 
       isSelected: (url: string) => url === route.path ? 'selected' : ''
     }

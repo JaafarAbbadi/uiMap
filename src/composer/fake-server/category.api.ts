@@ -33,7 +33,7 @@ export const getCategories = (limit: number, page: number, filter?: {[property: 
         res(
             filter? 
             categories.slice(limit*(page-1), limit*page).filter(c => {
-                c.name.includes(filter?.name) && 
+                c.name?.includes(filter?.name) && 
                 (c.description? c.description.includes(filter?.description): true)
             }) : categories.slice(limit*(page-1), limit*page)
         );
@@ -54,7 +54,7 @@ export const updateCategory = (id: string, values:{[val: string]: any}): Promise
 
 export const updateCategories = (ids: string[], values:{[val: string]: any}): Promise<any> => {
     return new Promise<any>((res,rej) => {
-        const cs: any[] = categories.filter(c => ids.includes(c.id));
+        const cs: any[] = categories.filter(c => ids.includes(c.id as string));
         if(values.id) rej("can't update id")
         if(cs.length) {
             res(cs.forEach(c => {
@@ -76,7 +76,7 @@ export const deleteCategory = (id: string): Promise<any> => {
 
 export const deleteCategories = (ids: string[]): Promise<any> => {
     return new Promise<any>((res,rej) => {
-        const cs: any[] = categories.filter(c => ids.includes(c.id));
+        const cs: any[] = categories.filter(c => ids.includes(c.id as string));
         if(cs.length) {
             res(cs.forEach(c => {categories.splice(categories.indexOf(c),1)}))
         }

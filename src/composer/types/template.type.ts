@@ -1,3 +1,4 @@
+import { Observable } from "rxjs";
 import { ApiCollection } from "./api-collection.type";
 import { FormInput } from "./form-input.type";
 import { Icon } from "./icons"
@@ -19,7 +20,8 @@ export interface Template <T>{
     form: Form,
 
 
-    apiCollection: ApiCollection<T>
+    apiCollection: ApiCollection<T>;
+    data$?: Observable<T[]>;
 }
 
 export interface ItemView  {
