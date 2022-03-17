@@ -89,7 +89,7 @@ export default {
     },
 
     mounted()  {
-        template.apiCollection.multipleRead(this.limit,this.page).then(items => this.items = items);
+        template.apiCollection.multipleRead(this.limit,this.page -1).then(items => this.items = items);
         console.log(this.title, ' mounted')
     },
     unmounted: function () {
